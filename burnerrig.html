@@ -7,7 +7,7 @@
 </head>
 <body>
     <script>
-        // Fonction pour convertir les degrés en radians
+        // Function to convert degrees to radians
         function radians(degrees) {
             return degrees * (Math.PI / 180);
         }
@@ -17,7 +17,7 @@
                 var number_of_holes = parseInt(document.getElementById("entry").value);
 
                 // Prompt the user to enter the support height (D)
-                var D = parseFloat(prompt("Please enter the height of the support (D):"));
+                var D = parseFloat(prompt("Please enter the height of the support (D) in mm:"));
                 if (isNaN(D)) {
                     return;  // User pressed Cancel
                 }
@@ -26,8 +26,8 @@
                 var H = (20 * number_of_holes - D + 19) / Math.cos(radians(45)) - 90;
                 var L = 20 * number_of_holes + 219 - D;
 
-                // Display a new window with the calculated values
-                showResultWindow(G, H, L);
+                // Display a new window with the calculated values and images
+                showResultWindow(G, H, L, 'Pictures/Pic1.PNG', 'Pictures/Pic2.PNG');
             } catch (error) {
                 alert("Error: " + error.message);
             }
@@ -40,19 +40,28 @@
                 var H = (20 * number_of_holes + 19) / Math.cos(radians(45)) - 90;
                 var L = 20 * number_of_holes + 19 + 200;
 
-                // Display a new window with the calculated values
-                showResultWindow(G, H, L);
+                // Display a new window with the calculated values and images
+                showResultWindow(G, H, L, 'Pictures/Pic1.PNG');
             } catch (error) {
                 alert("Error: " + error.message);
             }
         }
 
-        function showResultWindow(G, H, L) {
+        function showResultWindow(G, H, L, imageName1, imageName2) {
             var result_window = window.open("", "_blank");
             result_window.document.write("<h1>Results</h1>");
-            result_window.document.write("<p>G = " + G + "</p>");
-            result_window.document.write("<p>H = " + H + "</p>");
-            result_window.document.write("<p>L = " + L + "</p>");
+            result_window.document.write("<p style='font-size: 18px;'>G = " + G + " mm</p>");
+            result_window.document.write("<p style='font-size: 18px;'>H = " + H + " mm</p>");
+            result_window.document.write("<p style='font-size: 18px;'>L = " + L + " mm</p>");
+
+            // Display the first image
+            result_window.document.write("<img src='" + imageName1 + "' alt='Result Image 1'>");
+
+            // Display the second image for testWithSupport
+            if (imageName2) {
+                result_window.document.write("<p>Additional Image for testWithSupport:</p>");
+                result_window.document.write("<img src='" + imageName2 + "' alt='Result Image 2'>");
+            }
         }
     </script>
 
