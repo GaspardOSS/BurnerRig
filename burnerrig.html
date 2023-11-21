@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Program</title>
+</head>
+<body>
+    <script>
+        // Fonction pour convertir les degrés en radians
+        function radians(degrees) {
+            return degrees * (Math.PI / 180);
+        }
+
+        function testWithSupport() {
+            try {
+                var number_of_holes = parseInt(document.getElementById("entry").value);
+
+                // Prompt the user to enter the support height (D)
+                var D = parseFloat(prompt("Please enter the height of the support (D):"));
+                if (isNaN(D)) {
+                    return;  // User pressed Cancel
+                }
+
+                var G = 20 * number_of_holes;
+                var H = (20 * number_of_holes - D + 19) / Math.cos(radians(45)) - 90;
+                var L = 20 * number_of_holes + 219 - D;
+
+                // Display a new window with the calculated values
+                showResultWindow(G, H, L);
+            } catch (error) {
+                alert("Error: " + error.message);
+            }
+        }
+
+        function testWithoutSupport() {
+            try {
+                var number_of_holes = parseInt(document.getElementById("entry").value);
+                var G = 20 * number_of_holes;
+                var H = (20 * number_of_holes + 19) / Math.cos(radians(45)) - 90;
+                var L = 20 * number_of_holes + 19 + 200;
+
+                // Display a new window with the calculated values
+                showResultWindow(G, H, L);
+            } catch (error) {
+                alert("Error: " + error.message);
+            }
+        }
+
+        function showResultWindow(G, H, L) {
+            var result_window = window.open("", "_blank");
+            result_window.document.write("<h1>Results</h1>");
+            result_window.document.write("<p>G = " + G + "</p>");
+            result_window.document.write("<p>H = " + H + "</p>");
+            result_window.document.write("<p>L = " + L + "</p>");
+        }
+    </script>
+
+    <label for="entry">Number of holes:</label>
+    <input type="text" id="entry" />
+
+    <button onclick="testWithSupport()">Test with support for sample</button>
+    <button onclick="testWithoutSupport()">Test without support for sample</button>
+</body>
+</html>
